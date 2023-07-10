@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dormitory</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuUpload">
+     <property name="title">
+      <string>Upload</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>pic/upload.png</normaloff>pic/upload.png</iconset>
+     </property>
+     <addaction name="actionstudent"/>
+     <addaction name="actionStructure_File"/>
+    </widget>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>Export</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>pic/export.png</normaloff>pic/export.png</iconset>
+     </property>
+     <addaction name="action_xlsx_file"/>
+     <addaction name="action_png_file"/>
+    </widget>
+    <addaction name="menuUpload"/>
+    <addaction name="menuExport"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionstudent">
+   <property name="text">
+    <string>Student File</string>
+   </property>
+  </action>
+  <action name="actionStructure_File">
+   <property name="text">
+    <string>Structure File</string>
+   </property>
+  </action>
+  <action name="action_xlsx_file">
+   <property name="text">
+    <string>.xlsx file</string>
+   </property>
+  </action>
+  <action name="action_png_file">
+   <property name="text">
+    <string>.png file</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
