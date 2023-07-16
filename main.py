@@ -29,7 +29,6 @@ senior_list = []
 sophister_list = []
 
 
-
 for i in range(junior_num):
     a = Student()
     a.num = int(student_csv["학번1"][i])
