@@ -24,10 +24,12 @@ junior_num = int(student_csv["1학년 전체 수"][0])
 senior_num = int(student_csv["2학년 전체 수"][0])
 sophister_num = int(student_csv["3학년 전체 수"][0])
 
-junior_list = []                                    # 사람 리스트 생성
+junior_list = []                                    # 사람, 방 리스트 생성
 senior_list = []
 sophister_list = []
-
+junior_room = []
+senior_room = []
+sophister_room = []
 
 for i in range(junior_num):
     a = Student()
@@ -57,11 +59,26 @@ for i in range(sophister_num):
         a.sex = 1
     sophister_list.append(a)
 
+for i in range(31):
+    if int(student_csv["학년1"]) == 1:
+        b = [201 + i, student_csv[]]
+        junior_room.append(b)
+    if int(student_csv["학년1"]) == 2:
+        b = [201 + i, 2]
+        senior_room.append(b)
+    if int(student_csv["학년1"]) == 3:
+        b = [201 + i, 2]
+        sophister_room.append(b)
+
+
 # 배치
 rd.shuffle(junior_list)                             # 대망의 셔플
 rd.shuffle(senior_list)
 rd.shuffle(sophister_list)
 
+
+k = 0
+for j in junior_list: print(3)
 
 # UI 디자인
 
