@@ -1,12 +1,8 @@
 # 라이브러리 임포트
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import random as rd
+import uitest as ui
 
 
 class Student:
@@ -19,7 +15,7 @@ class Student:
 
 
 # 엑셀 입력 및 정리
-student_xlsx = pd.read_excel('./student.xlsx') # 이 부분을 studentFileName을 이용해서 바꿔주면 됨
+student_xlsx = pd.read_excel('./student.xlsx')  # 이 부분을 studentFileName을 이용해서 바꿔주면 됨
 freshman_num = int(student_xlsx["1학년 전체 수"][0])
 junior_num = int(student_xlsx["2학년 전체 수"][0])
 senior_num = int(student_xlsx["3학년 전체 수"][0])
@@ -41,7 +37,8 @@ freshman_f_room = []
 junior_f_room = []
 senior_f_room = []
 seat_list = []
-
+list_to_fix_room = []
+list_to_fix_seat = []
 
 for i in range(freshman_num):
     a = Student()
@@ -228,6 +225,10 @@ for i in range(26):
         b = [401 + i, 1]
         senior_f_room.append(b)
 
+# 고정 인원 추출
+for i in range(int(student_xlsx["고정학번1"][0])):
+
+
 # 대망의 셔플
 rd.shuffle(freshman_list)
 rd.shuffle(junior_list)
@@ -306,22 +307,13 @@ for i in range(15):
             senior_f_list.pop(0)
     seat_list.append(list_1)
 
-# UI 디자인
+# 데이터 정리
 a = sorted(freshman_list, key=lambda x: x.num)
 b = sorted(junior_list, key=lambda x: x.num)
 c = sorted(senior_list, key=lambda x: x.num)
 total = sorted(a + b + c,  key=lambda x: x.room)
 
+# ui 불러오기
 
-for i in total:
-    print(i.name, i.room)
-
-for ha in range(15):
-    for i in range(15):
-        if seat_list[i][ha] == 0:
-            print("-----", end='     ')
-        else:
-            print(f'{seat_list[i][ha].name:^4}', end='    ')
-    print()
 
 # 배치 내보내기
