@@ -28,6 +28,12 @@ senior_num = int(student_xlsx["3학년 전체 수"][0])
 freshman_list = []
 junior_list = []
 senior_list = []
+freshman_m_list = []
+junior_m_list = []
+senior_m_list = []
+freshman_f_list = []
+junior_f_list = []
+senior_f_list = []
 freshman_m_room = []
 junior_m_room = []
 senior_m_room = []
@@ -43,17 +49,20 @@ for i in range(freshman_num):
     a.name = student_xlsx["이름1"][i]
     if student_xlsx["성별1"][i] == "남":
         a.sex = 0
+        freshman_m_list.append(a)
     else:
         a.sex = 1
-    freshman_list.append(a)
+        freshman_f_list.append(a)
 for i in range(junior_num):
     a = Student()
     a.num = int(student_xlsx["학번2"][i])
     a.name = student_xlsx["이름2"][i]
     if student_xlsx["성별2"][i] == "남":
         a.sex = 0
+        junior_m_list.append(a)
     else:
         a.sex = 1
+        junior_f_list.append(a)
     junior_list.append(a)
 for i in range(senior_num):
     a = Student()
@@ -61,9 +70,15 @@ for i in range(senior_num):
     a.name = student_xlsx["이름3"][i]
     if student_xlsx["성별3"][i] == "남":
         a.sex = 0
+        senior_m_list.append(a)
     else:
         a.sex = 1
+        senior_f_list.append(a)
     senior_list.append(a)
+
+freshman_list = freshman_m_list + freshman_f_list
+junior_list = junior_m_list + junior_f_list
+senior_list = senior_m_list + senior_f_list
 
 for i in range(31):
     if int(student_xlsx["학년1"][i]) == 1:
@@ -251,32 +266,62 @@ for j in range(senior_num):
         if senior_f_room[0][1] == 0: senior_f_room.pop(0)
 
 # 한번 더 셔플
-rd.shuffle(freshman_list)
-rd.shuffle(junior_list)
-rd.shuffle(senior_list)
+rd.shuffle(freshman_m_list)
+rd.shuffle(freshman_f_list)
+rd.shuffle(junior_m_list)
+rd.shuffle(junior_f_list)
+rd.shuffle(senior_m_list)
+rd.shuffle(senior_f_list)
 
 # 독서실 자리 배치
 gg_1 = 0
 gg_2 = 0
 gg_3 = 0
 for i in range(15):
-    k = "북쪽라인" + str(i)
+    k = "북쪽라인" + str(i+1)
     a = student_xlsx[k]
     n_1 = int(a[0])
     n_2 = int(a[1])
+    list_1 = []
     for m in range(15):
-        if a[2+m] == 1:
-            # 더 채워넣어야 할 것.
-            # 마지막 독서실 자리만 넣으면 됨.
+        if a[2 + m] == 0:
+            list_1.append(0)
+        elif a[2 + m] == 1:
+            list_1.append(freshman_m_list[0])
+            freshman_m_list.pop(0)
+        elif a[2 + m] == 4:
+            list_1.append(freshman_f_list[0])
+            freshman_f_list.pop(0)
+        elif a[2 + m] == 2:
+            list_1.append(junior_m_list[0])
+            junior_m_list.pop(0)
+        elif a[2 + m] == 5:
+            list_1.append(junior_f_list[0])
+            junior_f_list.pop(0)
+        elif a[2 + m] == 3:
+            list_1.append(senior_m_list[0])
+            senior_m_list.pop(0)
+        elif a[2 + m] == 6:
+            list_1.append(senior_f_list[0])
+            senior_f_list.pop(0)
+    seat_list.append(list_1)
 
 # UI 디자인
-a = sorted(freshman_list, key=lambda x: x.room)
-b = sorted(junior_list, key=lambda x: x.room)
-c = sorted(senior_list, key=lambda x: x.room)
+a = sorted(freshman_list, key=lambda x: x.num)
+b = sorted(junior_list, key=lambda x: x.num)
+c = sorted(senior_list, key=lambda x: x.num)
 a = sorted(a + b + c,  key=lambda x: x.room)
+
 
 for i in a:
     print(i.name, i.room)
 
+for ha in range(15):
+    for i in range(15):
+        if seat_list[i][ha] == 0:
+            print(" -- ", end='    ')
+        else:
+            print(seat_list[i][ha].num, end='    ')
+    print()
 
 # 배치 내보내기
