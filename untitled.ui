@@ -13,16 +13,12 @@
   <property name="windowTitle">
    <string>Dormitory</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>pic/dormitory.png</normaloff>pic/dormitory.png</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>5</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="room2">
        <attribute name="title">
@@ -52,7 +48,7 @@
           </spacer>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="btn_2f">
            <property name="text">
             <string>배치</string>
            </property>
@@ -72,7 +68,7 @@
           </spacer>
          </item>
          <item row="1" column="1">
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="check_2f">
            <property name="text">
             <string>현재 배치 저장</string>
            </property>
@@ -109,7 +105,7 @@
           </spacer>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="btn_3f">
            <property name="text">
             <string>배치</string>
            </property>
@@ -129,7 +125,7 @@
           </spacer>
          </item>
          <item row="1" column="1">
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="check_3f">
            <property name="text">
             <string>현재 배치 저장</string>
            </property>
@@ -166,7 +162,7 @@
           </spacer>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="btn_4f">
            <property name="text">
             <string>배치</string>
            </property>
@@ -186,7 +182,7 @@
           </spacer>
          </item>
          <item row="1" column="1">
-          <widget class="QCheckBox" name="checkBox_3">
+          <widget class="QCheckBox" name="check_4f">
            <property name="text">
             <string>현재 배치 저장</string>
            </property>
@@ -223,7 +219,7 @@
           </spacer>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="btn_sm">
            <property name="text">
             <string>배치</string>
            </property>
@@ -243,7 +239,7 @@
           </spacer>
          </item>
          <item row="1" column="1">
-          <widget class="QCheckBox" name="checkBox_4">
+          <widget class="QCheckBox" name="check_sm">
            <property name="text">
             <string>현재 배치 저장</string>
            </property>
@@ -280,7 +276,7 @@
           </spacer>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton_5">
+          <widget class="QPushButton" name="btn_sf">
            <property name="text">
             <string>배치</string>
            </property>
@@ -300,7 +296,7 @@
           </spacer>
          </item>
          <item row="1" column="1">
-          <widget class="QCheckBox" name="checkBox_5">
+          <widget class="QCheckBox" name="check_sf">
            <property name="text">
             <string>현재 배치 저장</string>
            </property>
@@ -350,14 +346,14 @@
           </spacer>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="btn_xlsx">
            <property name="text">
             <string>내보내기(.xlsx)</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QPushButton" name="pushButton_7">
+          <widget class="QPushButton" name="btn_png">
            <property name="text">
             <string>내보내기(.png)</string>
            </property>
@@ -383,34 +379,32 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuUpload">
-     <property name="title">
-      <string>파일 업로드</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>pic/upload.png</normaloff>pic/upload.png</iconset>
-     </property>
-     <addaction name="actionstudent"/>
-     <addaction name="actionStructure_File"/>
-    </widget>
-    <addaction name="menuUpload"/>
     <addaction name="actionExit"/>
+    <addaction name="actionUpload"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actiond"/>
-    <addaction name="actiondd"/>
+    <addaction name="actionVisual"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionHelp"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="text">
     <string>종료</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
   <action name="actionstudent">
@@ -433,7 +427,7 @@
     <string>.png file</string>
    </property>
   </action>
-  <action name="actiond">
+  <action name="actionVisual">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -441,12 +435,26 @@
     <string>시각화 모드</string>
    </property>
   </action>
-  <action name="actiondd">
+  <action name="actionList">
    <property name="checkable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>목록 모드</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>도움말 바로가기</string>
+   </property>
+  </action>
+  <action name="actionUpload">
+   <property name="icon">
+    <iconset>
+     <normaloff>pic/upload.png</normaloff>pic/upload.png</iconset>
+   </property>
+   <property name="text">
+    <string>파일 업로드</string>
    </property>
   </action>
  </widget>

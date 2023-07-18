@@ -19,7 +19,7 @@ class Student:
 
 
 # 엑셀 입력 및 정리
-student_xlsx = pd.read_excel('./student.xlsx')
+student_xlsx = pd.read_excel('./student.xlsx') # 이 부분을 studentFileName을 이용해서 바꿔주면 됨
 freshman_num = int(student_xlsx["1학년 전체 수"][0])
 junior_num = int(student_xlsx["2학년 전체 수"][0])
 senior_num = int(student_xlsx["3학년 전체 수"][0])
@@ -310,18 +310,18 @@ for i in range(15):
 a = sorted(freshman_list, key=lambda x: x.num)
 b = sorted(junior_list, key=lambda x: x.num)
 c = sorted(senior_list, key=lambda x: x.num)
-a = sorted(a + b + c,  key=lambda x: x.room)
+total = sorted(a + b + c,  key=lambda x: x.room)
 
 
-for i in a:
+for i in total:
     print(i.name, i.room)
 
 for ha in range(15):
     for i in range(15):
         if seat_list[i][ha] == 0:
-            print(" -- ", end='    ')
+            print("-----", end='     ')
         else:
-            print(seat_list[i][ha].num, end='    ')
+            print(f'{seat_list[i][ha].name:^4}', end='    ')
     print()
 
 # 배치 내보내기
