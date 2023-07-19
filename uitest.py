@@ -5,6 +5,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
 import pandas as pd
+import random as rd
+import copy
 
 # UI 파일 연결
 form_class = uic.loadUiType("untitled.ui")[0]
@@ -26,6 +28,8 @@ freshman_f_room = []
 junior_f_room = []
 senior_f_room = []
 seat_list = []
+list_to_fix_room = []
+list_to_fix_seat = []
 freshman_num = junior_num = senior_num = 0
 student_xlsx = 0
 
@@ -33,7 +37,164 @@ student_xlsx = 0
 # global freshman_list, freshman_m_list, freshman_f_list, freshman_m_room, freshman_f_room, freshman_num
 # global junior_list, junior_m_list, junior_f_list, junior_m_room, junior_f_room, junior_num
 # global senior_list, senior_m_list, senior_f_list, senior_f_room, senior_m_room, senior_num
-# global seat_list
+# global seat_list, list_to_fix_room, list_to_fix_seat
+
+# 방 리스트를 pop해서 배치하니까 복구를 해줘야 함(최적화 따위 포기)
+def getRoom():
+    global freshman_m_room, freshman_f_room, junior_m_room, junior_f_room, senior_m_room, senior_f_room
+    freshman_m_room=[]
+    freshman_f_room=[]
+    junior_m_room=[]
+    junior_f_room=[]
+    senior_m_room=[]
+    senior_f_room=[]
+    for i in range(31):
+        if int(student_xlsx["학년1"][i]) == 1:
+            b = [201 + i, int(student_xlsx["인원수1"][i])]
+            freshman_m_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 2:
+            b = [201 + i, int(student_xlsx["인원수1"][i])]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 3:
+            b = [201 + i, int(student_xlsx["인원수1"][i])]
+            senior_m_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 4:
+            b = [201 + i, int(student_xlsx["인원수1"][i])]
+            freshman_f_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 5:
+            b = [201 + i, int(student_xlsx["인원수1"][i])]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 6:
+            b = [201 + i, int(student_xlsx["인원수1"][i])]
+            senior_f_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 7:
+            b = [201 + i, 1]
+            freshman_m_room.append(b)
+            b = [201 + i, 1]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 8:
+            b = [201 + i, 1]
+            senior_m_room.append(b)
+            b = [201 + i, 1]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 9:
+            b = [201 + i, 1]
+            freshman_m_room.append(b)
+            b = [201 + i, 1]
+            senior_m_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 10:
+            b = [201 + i, 1]
+            freshman_f_room.append(b)
+            b = [201 + i, 1]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 11:
+            b = [201 + i, 1]
+            senior_f_room.append(b)
+            b = [201 + i, 1]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년1"][i]) == 12:
+            b = [201 + i, 1]
+            freshman_f_room.append(b)
+            b = [201 + i, 1]
+            senior_f_room.append(b)
+    for i in range(31):
+        if int(student_xlsx["학년2"][i]) == 1:
+            b = [201 + i, int(student_xlsx["인원수2"][i])]
+            freshman_m_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 2:
+            b = [301 + i, int(student_xlsx["인원수2"][i])]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 3:
+            b = [301 + i, int(student_xlsx["인원수2"][i])]
+            senior_m_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 4:
+            b = [301 + i, int(student_xlsx["인원수2"][i])]
+            freshman_f_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 5:
+            b = [301 + i, int(student_xlsx["인원수2"][i])]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 6:
+            b = [301 + i, int(student_xlsx["인원수2"][i])]
+            senior_f_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 7:
+            b = [301 + i, 1]
+            freshman_m_room.append(b)
+            b = [301 + i, 1]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 8:
+            b = [301 + i, 1]
+            senior_m_room.append(b)
+            b = [301 + i, 1]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 9:
+            b = [301 + i, 1]
+            freshman_m_room.append(b)
+            b = [301 + i, 1]
+            senior_m_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 10:
+            b = [301 + i, 1]
+            freshman_f_room.append(b)
+            b = [301 + i, 1]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 11:
+            b = [301 + i, 1]
+            senior_f_room.append(b)
+            b = [301 + i, 1]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년2"][i]) == 12:
+            b = [301 + i, 1]
+            freshman_f_room.append(b)
+            b = [301 + i, 1]
+            senior_f_room.append(b)
+    for i in range(26):
+        if int(student_xlsx["학년3"][i]) == 1:
+            b = [401 + i, int(student_xlsx["인원수3"][i])]
+            freshman_m_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 2:
+            b = [401 + i, int(student_xlsx["인원수3"][i])]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 3:
+            b = [401 + i, int(student_xlsx["인원수3"][i])]
+            senior_m_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 4:
+            b = [401 + i, int(student_xlsx["인원수3"][i])]
+            freshman_f_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 5:
+            b = [401 + i, int(student_xlsx["인원수3"][i])]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 6:
+            b = [401 + i, int(student_xlsx["인원수3"][i])]
+            senior_f_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 7:
+            b = [401 + i, 1]
+            freshman_m_room.append(b)
+            b = [401 + i, 1]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 8:
+            b = [401 + i, 1]
+            senior_m_room.append(b)
+            b = [401 + i, 1]
+            junior_m_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 9:
+            b = [401 + i, 1]
+            freshman_m_room.append(b)
+            b = [401 + i, 1]
+            senior_m_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 10:
+            b = [401 + i, 1]
+            freshman_f_room.append(b)
+            b = [401 + i, 1]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 11:
+            b = [401 + i, 1]
+            senior_f_room.append(b)
+            b = [401 + i, 1]
+            junior_f_room.append(b)
+        elif int(student_xlsx["학년3"][i]) == 12:
+            b = [401 + i, 1]
+            freshman_f_room.append(b)
+            b = [401 + i, 1]
+            senior_f_room.append(b)
 
 # 학생 클래스
 class Student:
@@ -73,37 +234,234 @@ class WindowClass(QMainWindow, form_class):
         self.plan = [[] for i in range(5)]
         self.tmpPlan = [[] for i in range(5)]
 
-        self.lbl_2f.setPixmap(QPixmap("./pic/secthird.PNG").scaled(1000, 600))
+        self.scrollArea_2f.setWidget(self.lbl_2f)
+        self.scrollArea_3f.setWidget(self.lbl_3f)
+        self.scrollArea_4f.setWidget(self.lbl_4f)
+        self.scrollArea_sm.setWidget(self.lbl_sm)
+        self.scrollArea_sf.setWidget(self.lbl_sf)
 
     def roomPlan2(self, ifsave):
-        if self.studentFileName == '': QMessageBox.about(self, 'Warning', 'No File Selected')
+        global freshman_list, freshman_m_list, freshman_f_list, freshman_m_room, freshman_f_room, freshman_num
+        global seat_list, list_to_fix_room, list_to_fix_seat
+        if self.studentFileName == '':
+            QMessageBox.about(self, 'Warning', 'No File Selected')
+            return
         if ifsave:
             self.plan[0] = self.tmpPlan[0]
+
+        getRoom()
+        rd.shuffle(freshman_list)
+        for j in range(freshman_num):
+            student = freshman_list[j]
+            if student.sex == 0:
+                student.room = freshman_m_room[0][0]
+                freshman_m_room[0][1] -= 1
+                if freshman_m_room[0][1] == 0: freshman_m_room.pop(0)
+            else:
+                student.room = freshman_f_room[0][0]
+                freshman_f_room[0][1] -= 1
+                if freshman_f_room[0][1] == 0: freshman_f_room.pop(0)
+        x=sorted(freshman_list, key=lambda x: x.room)
+        str_x=''
+        self.lbl_2f.setText('')
+        for tmpStudent in x:
+            tmp=(tmpStudent.name+' '+str(tmpStudent.room)+'\n')
+            str_x+=tmp
+            self.lbl_2f.append(tmp)
+        if self.visualOn:
+            # 이미지를 만들고 출력(미구현)
+            self.lbl_2f.setPixmap(QPixmap("./pic/secthird.PNG").scaled(1000, 600))
 
         print("2층 배치")
 
     def roomPlan3(self, ifsave):
-        if self.studentFileName == '': QMessageBox.about(self, 'Warning', 'No File Selected')
+        global junior_list, junior_m_list, junior_f_list, junior_m_room, junior_f_room, junior_num
+        global seat_list, list_to_fix_room, list_to_fix_seat
+        if self.studentFileName == '':
+            QMessageBox.about(self, 'Warning', 'No File Selected')
+            return
         if ifsave:
             self.plan[1] = self.tmpPlan[1]
+
+        getRoom()
+        rd.shuffle(junior_list)
+        for j in range(junior_num):
+            student = junior_list[j]
+            if student.sex == 0:
+                student.room = junior_m_room[0][0]
+                junior_m_room[0][1] -= 1
+                if junior_m_room[0][1] == 0: junior_m_room.pop(0)
+            else:
+                student.room = junior_f_room[0][0]
+                junior_f_room[0][1] -= 1
+                if junior_f_room[0][1] == 0: junior_f_room.pop(0)
+        x = sorted(junior_list, key=lambda x: x.room)
+        str_x = ''
+        self.lbl_3f.setText('')
+        for tmpStudent in x:
+            tmp = (tmpStudent.name + ' ' + str(tmpStudent.room) + '\n')
+            str_x += tmp
+            self.lbl_3f.append(tmp)
+        if self.visualOn:
+            # 이미지를 만들고 출력(미구현)
+            self.lbl_3f.setPixmap(QPixmap("./pic/secthird.PNG").scaled(1000, 600))
         print("3층 배치")
 
     def roomPlan4(self, ifsave):
-        if self.studentFileName == '': QMessageBox.about(self, 'Warning', 'No File Selected')
+        global senior_list, senior_m_list, senior_f_list, senior_f_room, senior_m_room, senior_num
+        global seat_list, list_to_fix_room, list_to_fix_seat
+        if self.studentFileName == '':
+            QMessageBox.about(self, 'Warning', 'No File Selected')
+            return
         if ifsave:
             self.plan[2] = self.tmpPlan[2]
+
+        getRoom()
+        rd.shuffle(senior_list)
+        for j in range(senior_num):
+            student = senior_list[j]
+            if student.sex == 0:
+                student.room = senior_m_room[0][0]
+                senior_m_room[0][1] -= 1
+                if senior_m_room[0][1] == 0: senior_m_room.pop(0)
+            else:
+                student.room = senior_f_room[0][0]
+                senior_f_room[0][1] -= 1
+                if senior_f_room[0][1] == 0: senior_f_room.pop(0)
+        x = sorted(senior_list, key=lambda x: x.room)
+        str_x = ''
+        self.lbl_4f.setText('')
+        for tmpStudent in x:
+            tmp = (tmpStudent.name + ' ' + str(tmpStudent.room) + '\n')
+            str_x += tmp
+            self.lbl_4f.append(tmp)
+        if self.visualOn:
+            # 이미지를 만들고 출력(미구현)
+            self.lbl_4f.setPixmap(QPixmap("./pic/four.PNG").scaled(1000, 600))
+
         print("4층 배치")
 
     def studyPlanM(self, ifsave):
-        if self.studentFileName == '': QMessageBox.about(self, 'Warning', 'No File Selected')
+        global freshman_m_list, junior_m_list, senior_m_list
+        global seat_list, list_to_fix_seat
+        if self.studentFileName == '':
+            QMessageBox.about(self, 'Warning', 'No File Selected')
+            return
         if ifsave:
             self.plan[3] = self.tmpPlan[3]
+
+        list_1=copy.deepcopy(freshman_m_list)
+        list_2=copy.deepcopy(junior_m_list)
+        list_3=copy.deepcopy(senior_m_list)
+        count=[0,0,0]
+        rd.shuffle(freshman_m_list)
+        rd.shuffle(junior_m_list)
+        rd.shuffle(senior_m_list)
+        gg_1 = 0
+        gg_2 = 0
+        gg_3 = 0
+        for i in range(15):
+            k = "북쪽라인" + str(i + 1)
+            a = student_xlsx[k]
+            n_1 = int(a[0])
+            n_2 = int(a[1])
+            lis = []
+            for m in range(15):
+                if a[2 + m] == 0:
+                    lis.append(0)
+                elif a[2 + m] == 1:
+                    lis.append(list_1[0])
+                    list_1.pop(0)
+                    freshman_m_list[count[0]].seat=[i,m]
+                    count[0]+=1
+                elif a[2 + m] == 2:
+                    lis.append(list_2[0])
+                    list_2.pop(0)
+                    junior_m_list[count[1]].seat = [i, m]
+                    count[1] += 1
+                elif a[2 + m] == 3:
+                    lis.append(list_3[0])
+                    list_3.pop(0)
+                    senior_m_list[count[2]].seat = [i, m]
+                    count[2] += 1
+            seat_list.append(lis)
+        x = sorted(freshman_m_list, key=lambda x: x.seat)
+        y = sorted(junior_m_list, key=lambda x: x.seat)
+        z = sorted(senior_m_list, key=lambda x: x.seat)
+        li=x+y+z
+        str_li=''
+        self.lbl_sm.setText('')
+        print(x)
+        for tmpStudent in li:
+            tmp = (tmpStudent.name + ' ' + str(tmpStudent.seat) + '\n')
+            str_li += tmp
+            self.lbl_sm.append(tmp)
+
+        if self.visualOn:
+            # 이미지를 만들고 출력(미구현)
+            self.lbl_sm.setPixmap(QPixmap("./pic/four.PNG").scaled(1000, 600))
         print("자습실(남) 배치")
 
     def studyPlanF(self, ifsave):
-        if self.studentFileName == '': QMessageBox.about(self, 'Warning', 'No File Selected')
+        global freshman_f_list, junior_f_list, senior_f_list
+        global seat_list, list_to_fix_seat
+        if self.studentFileName == '':
+            QMessageBox.about(self, 'Warning', 'No File Selected')
+            return
         if ifsave:
             self.plan[4] = self.tmpPlan[4]
+
+        list_1 = copy.deepcopy(freshman_f_list)
+        list_2 = copy.deepcopy(junior_f_list)
+        list_3 = copy.deepcopy(senior_f_list)
+        count = [0, 0, 0]
+        seat_list=[]
+        rd.shuffle(freshman_f_list)
+        rd.shuffle(junior_f_list)
+        rd.shuffle(senior_f_list)
+        gg_1 = 0
+        gg_2 = 0
+        gg_3 = 0
+        for i in range(15):
+            k = "북쪽라인" + str(i + 1)
+            a = student_xlsx[k]
+            n_1 = int(a[0])
+            n_2 = int(a[1])
+            lis = []
+            for m in range(15):
+                if a[2 + m] == 0:
+                    lis.append(0)
+                elif a[2 + m] == 4:
+                    lis.append(list_1[0])
+                    list_1.pop(0)
+                    freshman_f_list[count[0]].seat = [i, m]
+                    count[0] += 1
+                elif a[2 + m] == 5:
+                    lis.append(list_2[0])
+                    list_2.pop(0)
+                    junior_f_list[count[1]].seat = [i, m]
+                    count[1] += 1
+                elif a[2 + m] == 6:
+                    lis.append(list_3[0])
+                    list_3.pop(0)
+                    senior_f_list[count[2]].seat = [i, m]
+                    count[2] += 1
+            seat_list.append(lis)
+        x = sorted(freshman_f_list, key=lambda x: x.seat)
+        y = sorted(junior_f_list, key=lambda x: x.seat)
+        z = sorted(senior_f_list, key=lambda x: x.seat)
+        li = x + y + z
+        str_li = ''
+        self.lbl_sf.setText('')
+        print(x)
+        for tmpStudent in li:
+            tmp = (tmpStudent.name + ' ' + str(tmpStudent.seat) + '\n')
+            str_li += tmp
+            self.lbl_sf.append(tmp)
+
+        if self.visualOn:
+            # 이미지를 만들고 출력(미구현)
+            self.lbl_sf.setPixmap(QPixmap("./pic/four.PNG").scaled(1000, 600))
         print("자습실(여) 배치")
 
     def exportXLSX(self):
@@ -141,15 +499,58 @@ class WindowClass(QMainWindow, form_class):
 
     def openFile(self):
         global freshman_num, junior_num, senior_num, student_xlsx
+        global freshman_list, freshman_m_list, freshman_f_list, junior_list, junior_m_list, junior_f_list, senior_list, senior_m_list, senior_f_list
         filename = QFileDialog.getOpenFileName(self, 'Open File')
         if filename[0] != '':
             self.studentFileName = filename[0]
         else:
             QMessageBox.about(self, 'Warning', 'No File Selected')
-        student_xlsx = pd.read_excel(filename)  # 이 부분을 studentFileName을 이용해서 바꿔주면 됨
+        student_xlsx = pd.read_excel(self.studentFileName)  # 이 부분을 studentFileName을 이용해서 바꿔주면 됨
         freshman_num = int(student_xlsx["1학년 전체 수"][0])
         junior_num = int(student_xlsx["2학년 전체 수"][0])
         senior_num = int(student_xlsx["3학년 전체 수"][0])
+
+        # 학생 정보 추출
+        for i in range(freshman_num):
+            a = Student()
+            a.num = int(student_xlsx["학번1"][i])
+            a.name = student_xlsx["이름1"][i]
+            if student_xlsx["성별1"][i] == "남":
+                a.sex = 0
+                freshman_m_list.append(a)
+            else:
+                a.sex = 1
+                freshman_f_list.append(a)
+        for i in range(junior_num):
+            a = Student()
+            a.num = int(student_xlsx["학번2"][i])
+            a.name = student_xlsx["이름2"][i]
+            if student_xlsx["성별2"][i] == "남":
+                a.sex = 0
+                junior_m_list.append(a)
+            else:
+                a.sex = 1
+                junior_f_list.append(a)
+            junior_list.append(a)
+        for i in range(senior_num):
+            a = Student()
+            a.num = int(student_xlsx["학번3"][i])
+            a.name = student_xlsx["이름3"][i]
+            if student_xlsx["성별3"][i] == "남":
+                a.sex = 0
+                senior_m_list.append(a)
+            else:
+                a.sex = 1
+                senior_f_list.append(a)
+            senior_list.append(a)
+
+        freshman_list = freshman_m_list + freshman_f_list
+        junior_list = junior_m_list + junior_f_list
+        senior_list = senior_m_list + senior_f_list
+
+        # 배치할 방 추출
+        getRoom()
+
     def changeMode(self):
         self.visualOn = not self.visualOn
 

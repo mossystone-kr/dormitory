@@ -18,37 +18,47 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="room2">
        <attribute name="title">
-        <string>방(2층)</string>
+        <string>방(1학년)</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
-           <widget class="QLabel" name="lbl_2f">
-            <property name="text">
-             <string/>
+           <widget class="QScrollArea" name="scrollArea_2f">
+            <property name="widgetResizable">
+             <bool>true</bool>
             </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>998</width>
+               <height>295</height>
+              </rect>
+             </property>
+            </widget>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <widget class="QCheckBox" name="check_2f">
             <property name="text">
              <string>현재 배치 저장</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="2" column="2">
            <widget class="QPushButton" name="btn_2f">
             <property name="text">
              <string>배치</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -61,18 +71,14 @@
             </property>
            </spacer>
           </item>
-          <item row="0" column="2">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="1" column="0">
+           <widget class="QTextBrowser" name="lbl_2f">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
         </item>
@@ -80,316 +86,323 @@
       </widget>
       <widget class="QWidget" name="room3">
        <attribute name="title">
-        <string>방(3층)</string>
+        <string>방(2학년)</string>
        </attribute>
-       <widget class="QWidget" name="gridLayoutWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>961</width>
-          <height>561</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="1" column="0">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_3f">
-           <property name="text">
-            <string>배치</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1">
-          <widget class="QCheckBox" name="check_3f">
-           <property name="text">
-            <string>현재 배치 저장</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_3f">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="0">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QScrollArea" name="scrollArea_3f">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_2">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>998</width>
+               <height>295</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="btn_3f">
+            <property name="text">
+             <string>배치</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="check_3f">
+            <property name="text">
+             <string>현재 배치 저장</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTextBrowser" name="lbl_3f">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="room4">
        <attribute name="title">
-        <string>방(4층)</string>
+        <string>방(3학년)</string>
        </attribute>
-       <widget class="QWidget" name="gridLayoutWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>961</width>
-          <height>561</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="1" column="0">
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_4f">
-           <property name="text">
-            <string>배치</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="verticalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1">
-          <widget class="QCheckBox" name="check_4f">
-           <property name="text">
-            <string>현재 배치 저장</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_4f">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_10">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="2" column="0">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QScrollArea" name="scrollArea_4f">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_3">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>998</width>
+               <height>295</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="check_4f">
+            <property name="text">
+             <string>현재 배치 저장</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="btn_4f">
+            <property name="text">
+             <string>배치</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTextBrowser" name="lbl_4f">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="studyM">
        <attribute name="title">
         <string>자습실(남)</string>
        </attribute>
-       <widget class="QWidget" name="gridLayoutWidget_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>961</width>
-          <height>561</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="1" column="0">
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_sm">
-           <property name="text">
-            <string>배치</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="verticalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1">
-          <widget class="QCheckBox" name="check_sm">
-           <property name="text">
-            <string>현재 배치 저장</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_sm">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_11">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="2" column="2">
+           <widget class="QPushButton" name="btn_sm">
+            <property name="text">
+             <string>배치</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QScrollArea" name="scrollArea_sm">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_4">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>998</width>
+               <height>295</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="check_sm">
+            <property name="text">
+             <string>현재 배치 저장</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTextBrowser" name="lbl_sm">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="studyF">
        <attribute name="title">
         <string>자습실(여)</string>
        </attribute>
-       <widget class="QWidget" name="gridLayoutWidget_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>961</width>
-          <height>551</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_6">
-         <item row="1" column="0">
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_sf">
-           <property name="text">
-            <string>배치</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="verticalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1">
-          <widget class="QCheckBox" name="check_sf">
-           <property name="text">
-            <string>현재 배치 저장</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_sf">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_12">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QScrollArea" name="scrollArea_sf">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_5">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>998</width>
+               <height>295</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="btn_sf">
+            <property name="text">
+             <string>배치</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="check_sf">
+            <property name="text">
+             <string>현재 배치 저장</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTextBrowser" name="lbl_sf">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="current">
        <attribute name="title">
         <string>현재 배치</string>
        </attribute>
-       <widget class="QWidget" name="gridLayoutWidget_6">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>961</width>
-          <height>551</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_7">
-         <item row="1" column="0">
-          <spacer name="horizontalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="2">
-          <spacer name="verticalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_xlsx">
-           <property name="text">
-            <string>내보내기(.xlsx)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="btn_png">
-           <property name="text">
-            <string>내보내기(.png)</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_13">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="2" column="0">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="btn_xlsx">
+            <property name="text">
+             <string>내보내기(.xlsx)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QScrollArea" name="scrollArea_c">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_6">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>999</width>
+               <height>295</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTextBrowser" name="lbl_c">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="btn_png">
+            <property name="text">
+             <string>내보내기(.txt)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
