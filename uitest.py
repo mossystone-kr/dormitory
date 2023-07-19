@@ -4,11 +4,45 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
-
+import pandas as pd
 
 # UI 파일 연결
 form_class = uic.loadUiType("untitled.ui")[0]
 
+# 사람, 방 리스트 생성
+freshman_list = []
+junior_list = []
+senior_list = []
+freshman_m_list = []
+junior_m_list = []
+senior_m_list = []
+freshman_f_list = []
+junior_f_list = []
+senior_f_list = []
+freshman_m_room = []
+junior_m_room = []
+senior_m_room = []
+freshman_f_room = []
+junior_f_room = []
+senior_f_room = []
+seat_list = []
+freshman_num = junior_num = senior_num = 0
+student_xlsx = 0
+
+# 값 참조만 하면 상관없는데 바꿔야 할 경우를 대비해서 아래에 복붙할 글로벌 키워드를 적어놓음
+# global freshman_list, freshman_m_list, freshman_f_list, freshman_m_room, freshman_f_room, freshman_num
+# global junior_list, junior_m_list, junior_f_list, junior_m_room, junior_f_room, junior_num
+# global senior_list, senior_m_list, senior_f_list, senior_f_room, senior_m_room, senior_num
+# global seat_list
+
+# 학생 클래스
+class Student:
+    def __init__(self):
+        self.num = 0
+        self.name = "g"
+        self.sex = 0
+        self.room = 0
+        self.seat = [0, 0]
 
 # 화면을 띄우는데 사용되는 Class 선언
 class WindowClass(QMainWindow, form_class):
@@ -39,7 +73,7 @@ class WindowClass(QMainWindow, form_class):
         self.plan = [[] for i in range(5)]
         self.tmpPlan = [[] for i in range(5)]
 
-        self.label_2.setPixmap(QPixmap("./pic/secthird.PNG").scaled(1000, 500))
+        self.lbl_2f.setPixmap(QPixmap("./pic/secthird.PNG").scaled(1000, 600))
 
     def roomPlan2(self, ifsave):
         if self.studentFileName == '': QMessageBox.about(self, 'Warning', 'No File Selected')
@@ -106,12 +140,16 @@ class WindowClass(QMainWindow, form_class):
                 self.save[6] = False
 
     def openFile(self):
+        global freshman_num, junior_num, senior_num, student_xlsx
         filename = QFileDialog.getOpenFileName(self, 'Open File')
         if filename[0] != '':
             self.studentFileName = filename[0]
         else:
             QMessageBox.about(self, 'Warning', 'No File Selected')
-
+        student_xlsx = pd.read_excel(filename)  # 이 부분을 studentFileName을 이용해서 바꿔주면 됨
+        freshman_num = int(student_xlsx["1학년 전체 수"][0])
+        junior_num = int(student_xlsx["2학년 전체 수"][0])
+        senior_num = int(student_xlsx["3학년 전체 수"][0])
     def changeMode(self):
         self.visualOn = not self.visualOn
 

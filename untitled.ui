@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>700</height>
+    <width>1231</width>
+    <height>735</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,71 +24,59 @@
        <attribute name="title">
         <string>방(2층)</string>
        </attribute>
-       <widget class="QWidget" name="gridLayoutWidget_13">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>961</width>
-          <height>561</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="1" column="0">
-          <spacer name="horizontalSpacer_13">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_2f">
-           <property name="text">
-            <string>배치</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="verticalSpacer_13">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1">
-          <widget class="QCheckBox" name="check_2f">
-           <property name="text">
-            <string>현재 배치 저장</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_8">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_2f">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="check_2f">
+            <property name="text">
+             <string>현재 배치 저장</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="btn_2f">
+            <property name="text">
+             <string>배치</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="2">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="room3">
        <attribute name="title">
@@ -141,6 +129,13 @@
           <widget class="QCheckBox" name="check_3f">
            <property name="text">
             <string>현재 배치 저장</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_3f">
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </item>
@@ -201,6 +196,13 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_4f">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </widget>
@@ -258,6 +260,13 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_sm">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </widget>
@@ -269,9 +278,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>10</y>
           <width>961</width>
-          <height>561</height>
+          <height>551</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_6">
@@ -315,6 +324,13 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_sf">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </widget>
@@ -326,9 +342,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>10</y>
           <width>961</width>
-          <height>561</height>
+          <height>551</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_7">
@@ -384,8 +400,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
-     <height>21</height>
+     <width>1231</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -464,7 +480,7 @@
   <action name="actionUpload">
    <property name="icon">
     <iconset>
-     <normaloff>pic/upload.png</normaloff>pic/upload.png</iconset>
+     <normaloff>C:/Users/user/.designer/backup/pic/upload.png</normaloff>C:/Users/user/.designer/backup/pic/upload.png</iconset>
    </property>
    <property name="text">
     <string>파일 업로드</string>
