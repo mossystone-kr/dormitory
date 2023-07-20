@@ -260,8 +260,9 @@ class WindowClass(QMainWindow, form_class):
                 student.room = freshman_f_room[0][0]
                 freshman_f_room[0][1] -= 1
                 if freshman_f_room[0][1] == 0: freshman_f_room.pop(0)
-            self.tmpPlan[0].append(student)
         x=sorted(freshman_list, key=lambda x: x.room)
+        for tmp in x:
+            self.tmpPlan[0].append(tmp)
         str_x=''
         self.lbl_2f.clear()
         for tmpStudent in x:
@@ -291,8 +292,9 @@ class WindowClass(QMainWindow, form_class):
                 student.room = junior_f_room[0][0]
                 junior_f_room[0][1] -= 1
                 if junior_f_room[0][1] == 0: junior_f_room.pop(0)
-            self.tmpPlan[1].append(student)
         x = sorted(junior_list, key=lambda x: x.room)
+        for tmp in x:
+            self.tmpPlan[1].append(tmp)
         str_x = ''
         self.lbl_3f.setText('')
         for tmpStudent in x:
@@ -322,8 +324,9 @@ class WindowClass(QMainWindow, form_class):
                 student.room = senior_f_room[0][0]
                 senior_f_room[0][1] -= 1
                 if senior_f_room[0][1] == 0: senior_f_room.pop(0)
-            self.tmpPlan[2].append(student)
         x = sorted(senior_list, key=lambda x: x.room)
+        for tmp in x:
+            self.tmpPlan[2].append(tmp)
         str_x = ''
         self.lbl_4f.setText('')
         for tmpStudent in x:
@@ -362,19 +365,18 @@ class WindowClass(QMainWindow, form_class):
                     senior_m_list[count[2]].seat = [i, m]
                     count[2] += 1
             seat_list.append(lis)
-        for tmp in freshman_m_list:
-            self.tmpPlan[3].append(tmp)
-        for tmp in junior_m_list:
-            self.tmpPlan[3].append(tmp)
-        for tmp in senior_m_list:
-            self.tmpPlan[3].append(tmp)
         x = sorted(freshman_m_list, key=lambda x: x.seat)
         y = sorted(junior_m_list, key=lambda x: x.seat)
         z = sorted(senior_m_list, key=lambda x: x.seat)
+        for tmp in x:
+            self.tmpPlan[3].append(tmp)
+        for tmp in y:
+            self.tmpPlan[3].append(tmp)
+        for tmp in z:
+            self.tmpPlan[3].append(tmp)
         li=x+y+z
         str_li=''
         self.lbl_sm.setText('')
-        print(x)
         for tmpStudent in li:
             tmp = (tmpStudent.name + ' ' + str(tmpStudent.seat) + '\n')
             str_li += tmp
@@ -413,19 +415,18 @@ class WindowClass(QMainWindow, form_class):
                     senior_f_list[count[2]].seat = [i, m]
                     count[2] += 1
             seat_list.append(lis)
-        for tmp in freshman_f_list:
-            self.tmpPlan[4].append(tmp)
-        for tmp in junior_f_list:
-            self.tmpPlan[4].append(tmp)
-        for tmp in senior_f_list:
-            self.tmpPlan[4].append(tmp)
         x = sorted(freshman_f_list, key=lambda x: x.seat)
         y = sorted(junior_f_list, key=lambda x: x.seat)
         z = sorted(senior_f_list, key=lambda x: x.seat)
+        for tmp in x:
+            self.tmpPlan[4].append(tmp)
+        for tmp in y:
+            self.tmpPlan[4].append(tmp)
+        for tmp in z:
+            self.tmpPlan[4].append(tmp)
         li = x + y + z
         str_li = ''
         self.lbl_sf.setText('')
-        print(x)
         for tmpStudent in li:
             tmp = (tmpStudent.name + ' ' + str(tmpStudent.seat) + '\n')
             str_li += tmp
