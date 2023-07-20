@@ -246,7 +246,7 @@ class WindowClass(QMainWindow, form_class):
             QMessageBox.about(self, 'Warning', 'No File Selected')
             return
         if ifsave:
-            self.plan[0] = self.tmpPlan[0]
+            self.plan[0] = copy.deepcopy(self.tmpPlan[0])
         self.tmpPlan[0].clear()
         getRoom()
         rd.shuffle(freshman_list)
@@ -278,7 +278,7 @@ class WindowClass(QMainWindow, form_class):
             QMessageBox.about(self, 'Warning', 'No File Selected')
             return
         if ifsave:
-            self.plan[1] = self.tmpPlan[1]
+            self.plan[1] = copy.deepcopy(self.tmpPlan[1])
         self.tmpPlan[1].clear()
         getRoom()
         rd.shuffle(junior_list)
@@ -310,7 +310,7 @@ class WindowClass(QMainWindow, form_class):
             QMessageBox.about(self, 'Warning', 'No File Selected')
             return
         if ifsave:
-            self.plan[2] = self.tmpPlan[2]
+            self.plan[2] = copy.deepcopy(self.tmpPlan[2])
         self.tmpPlan[2].clear()
         getRoom()
         rd.shuffle(senior_list)
@@ -342,7 +342,7 @@ class WindowClass(QMainWindow, form_class):
             QMessageBox.about(self, 'Warning', 'No File Selected')
             return
         if ifsave:
-            self.plan[3] = self.tmpPlan[3]
+            self.plan[3] = copy.deepcopy(self.tmpPlan[3])
         self.tmpPlan[3].clear()
         count=[0,0,0]
         rd.shuffle(freshman_m_list)
@@ -391,7 +391,7 @@ class WindowClass(QMainWindow, form_class):
             QMessageBox.about(self, 'Warning', 'No File Selected')
             return
         if ifsave:
-            self.plan[4] = self.tmpPlan[4]
+            self.plan[4] = copy.deepcopy(self.tmpPlan[4])
         self.tmpPlan[4].clear()
         count = [0, 0, 0]
         seat_list=[]
@@ -441,16 +441,13 @@ class WindowClass(QMainWindow, form_class):
         f=open('배치.txt', 'w')
         for i in range(5):
             if not self.plan[i]:
-                if not self.tmpPlan[i]:
-                    f.write('<배치 정보 없음>\n')
-                    continue
-                else:
-                    for tmp in self.tmpPlan[i]:
-                        if i==0 or i==1 or i==2:
-                            f.write(tmp.name+' '+str(tmp.room)+'\n')
-                        else:
-                            f.write(tmp.name + ' ' + str(tmp.seat) + '\n')
+                for tmp in self.tmpPlan[i]:
+                    if i == 0 or i == 1 or i == 2:
+                        f.write(tmp.name + ' ' + str(tmp.room) + '\n')
+                    else:
+                        f.write(tmp.name + ' ' + str(tmp.seat) + '\n')
             else:
+                print(1)
                 for tmp in self.plan[i]:
                     if i == 0 or i == 1 or i == 2:
                         f.write(tmp.name + ' ' + str(tmp.room) + '\n')
