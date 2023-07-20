@@ -7,6 +7,7 @@ from PyQt5 import uic
 import pandas as pd
 import random as rd
 import copy
+import webbrowser
 
 # UI 파일 연결
 form_class = uic.loadUiType("untitled.ui")[0]
@@ -218,7 +219,7 @@ class WindowClass(QMainWindow, form_class):
         self.btn_sm.clicked.connect(lambda: self.studyPlanM(self.save[5]))
         self.btn_sf.clicked.connect(lambda: self.studyPlanF(self.save[6]))
         self.btn_xlsx.clicked.connect(self.exportXLSX)
-        self.btn_png.clicked.connect(self.exportPNG)
+        self.btn_txt.clicked.connect(self.exportTXT)
 
         self.check_2f.stateChanged.connect(lambda: self.checkFunction(2))
         self.check_3f.stateChanged.connect(lambda: self.checkFunction(3))
@@ -226,19 +227,17 @@ class WindowClass(QMainWindow, form_class):
         self.check_sm.stateChanged.connect(lambda: self.checkFunction(5))
         self.check_sf.stateChanged.connect(lambda: self.checkFunction(6))
 
+        self.map_1.clicked.connect(lambda: self.showMap(1))
+        self.map_2.clicked.connect(lambda: self.showMap(2))
+        self.map_3.clicked.connect(lambda: self.showMap(3))
+        self.map_4.clicked.connect(lambda: self.showMap(4))
+
         self.actionExit.triggered.connect(qApp.quit)
         self.studentFileName = ''
         self.actionUpload.triggered.connect(self.openFile)
-        self.visualOn = False
-        self.actionVisual.triggered.connect(self.changeMode)
         self.plan = [[] for i in range(5)]
         self.tmpPlan = [[] for i in range(5)]
-
-        self.scrollArea_2f.setWidget(self.lbl_2f)
-        self.scrollArea_3f.setWidget(self.lbl_3f)
-        self.scrollArea_4f.setWidget(self.lbl_4f)
-        self.scrollArea_sm.setWidget(self.lbl_sm)
-        self.scrollArea_sf.setWidget(self.lbl_sf)
+        self.actionHelp.triggered.connect(lambda: webbrowser.open('https://docs.google.com/document/d/1vIYdPUKljWS9jPG89pcUGDy9y6tLLtvv6ehw801yguo/edit?usp=sharing'))
 
     def roomPlan2(self, ifsave):
         global freshman_list, freshman_m_list, freshman_f_list, freshman_m_room, freshman_f_room, freshman_num
@@ -248,7 +247,7 @@ class WindowClass(QMainWindow, form_class):
             return
         if ifsave:
             self.plan[0] = self.tmpPlan[0]
-
+        self.tmpPlan[0].clear()
         getRoom()
         rd.shuffle(freshman_list)
         for j in range(freshman_num):
@@ -261,17 +260,14 @@ class WindowClass(QMainWindow, form_class):
                 student.room = freshman_f_room[0][0]
                 freshman_f_room[0][1] -= 1
                 if freshman_f_room[0][1] == 0: freshman_f_room.pop(0)
+            self.tmpPlan[0].append(student)
         x=sorted(freshman_list, key=lambda x: x.room)
         str_x=''
-        self.lbl_2f.setText('')
+        self.lbl_2f.clear()
         for tmpStudent in x:
             tmp=(tmpStudent.name+' '+str(tmpStudent.room)+'\n')
             str_x+=tmp
             self.lbl_2f.append(tmp)
-        if self.visualOn:
-            # 이미지를 만들고 출력(미구현)
-            self.lbl_2f.setPixmap(QPixmap("./pic/secthird.PNG").scaled(1000, 600))
-
         print("2층 배치")
 
     def roomPlan3(self, ifsave):
@@ -282,7 +278,7 @@ class WindowClass(QMainWindow, form_class):
             return
         if ifsave:
             self.plan[1] = self.tmpPlan[1]
-
+        self.tmpPlan[1].clear()
         getRoom()
         rd.shuffle(junior_list)
         for j in range(junior_num):
@@ -295,6 +291,7 @@ class WindowClass(QMainWindow, form_class):
                 student.room = junior_f_room[0][0]
                 junior_f_room[0][1] -= 1
                 if junior_f_room[0][1] == 0: junior_f_room.pop(0)
+            self.tmpPlan[1].append(student)
         x = sorted(junior_list, key=lambda x: x.room)
         str_x = ''
         self.lbl_3f.setText('')
@@ -302,9 +299,6 @@ class WindowClass(QMainWindow, form_class):
             tmp = (tmpStudent.name + ' ' + str(tmpStudent.room) + '\n')
             str_x += tmp
             self.lbl_3f.append(tmp)
-        if self.visualOn:
-            # 이미지를 만들고 출력(미구현)
-            self.lbl_3f.setPixmap(QPixmap("./pic/secthird.PNG").scaled(1000, 600))
         print("3층 배치")
 
     def roomPlan4(self, ifsave):
@@ -315,7 +309,7 @@ class WindowClass(QMainWindow, form_class):
             return
         if ifsave:
             self.plan[2] = self.tmpPlan[2]
-
+        self.tmpPlan[2].clear()
         getRoom()
         rd.shuffle(senior_list)
         for j in range(senior_num):
@@ -328,6 +322,7 @@ class WindowClass(QMainWindow, form_class):
                 student.room = senior_f_room[0][0]
                 senior_f_room[0][1] -= 1
                 if senior_f_room[0][1] == 0: senior_f_room.pop(0)
+            self.tmpPlan[2].append(student)
         x = sorted(senior_list, key=lambda x: x.room)
         str_x = ''
         self.lbl_4f.setText('')
@@ -335,10 +330,6 @@ class WindowClass(QMainWindow, form_class):
             tmp = (tmpStudent.name + ' ' + str(tmpStudent.room) + '\n')
             str_x += tmp
             self.lbl_4f.append(tmp)
-        if self.visualOn:
-            # 이미지를 만들고 출력(미구현)
-            self.lbl_4f.setPixmap(QPixmap("./pic/four.PNG").scaled(1000, 600))
-
         print("4층 배치")
 
     def studyPlanM(self, ifsave):
@@ -349,42 +340,34 @@ class WindowClass(QMainWindow, form_class):
             return
         if ifsave:
             self.plan[3] = self.tmpPlan[3]
-
-        list_1=copy.deepcopy(freshman_m_list)
-        list_2=copy.deepcopy(junior_m_list)
-        list_3=copy.deepcopy(senior_m_list)
+        self.tmpPlan[3].clear()
         count=[0,0,0]
         rd.shuffle(freshman_m_list)
         rd.shuffle(junior_m_list)
         rd.shuffle(senior_m_list)
-        gg_1 = 0
-        gg_2 = 0
-        gg_3 = 0
         for i in range(15):
             k = "북쪽라인" + str(i + 1)
             a = student_xlsx[k]
-            n_1 = int(a[0])
-            n_2 = int(a[1])
             lis = []
             for m in range(15):
                 if a[2 + m] == 0:
                     lis.append(0)
                 elif a[2 + m] == 1:
-                    lis.append(list_1[0])
-                    list_1.pop(0)
                     freshman_m_list[count[0]].seat=[i,m]
                     count[0]+=1
                 elif a[2 + m] == 2:
-                    lis.append(list_2[0])
-                    list_2.pop(0)
                     junior_m_list[count[1]].seat = [i, m]
                     count[1] += 1
                 elif a[2 + m] == 3:
-                    lis.append(list_3[0])
-                    list_3.pop(0)
                     senior_m_list[count[2]].seat = [i, m]
                     count[2] += 1
             seat_list.append(lis)
+        for tmp in freshman_m_list:
+            self.tmpPlan[3].append(tmp)
+        for tmp in junior_m_list:
+            self.tmpPlan[3].append(tmp)
+        for tmp in senior_m_list:
+            self.tmpPlan[3].append(tmp)
         x = sorted(freshman_m_list, key=lambda x: x.seat)
         y = sorted(junior_m_list, key=lambda x: x.seat)
         z = sorted(senior_m_list, key=lambda x: x.seat)
@@ -397,9 +380,6 @@ class WindowClass(QMainWindow, form_class):
             str_li += tmp
             self.lbl_sm.append(tmp)
 
-        if self.visualOn:
-            # 이미지를 만들고 출력(미구현)
-            self.lbl_sm.setPixmap(QPixmap("./pic/four.PNG").scaled(1000, 600))
         print("자습실(남) 배치")
 
     def studyPlanF(self, ifsave):
@@ -410,43 +390,35 @@ class WindowClass(QMainWindow, form_class):
             return
         if ifsave:
             self.plan[4] = self.tmpPlan[4]
-
-        list_1 = copy.deepcopy(freshman_f_list)
-        list_2 = copy.deepcopy(junior_f_list)
-        list_3 = copy.deepcopy(senior_f_list)
+        self.tmpPlan[4].clear()
         count = [0, 0, 0]
         seat_list=[]
         rd.shuffle(freshman_f_list)
         rd.shuffle(junior_f_list)
         rd.shuffle(senior_f_list)
-        gg_1 = 0
-        gg_2 = 0
-        gg_3 = 0
         for i in range(15):
             k = "북쪽라인" + str(i + 1)
             a = student_xlsx[k]
-            n_1 = int(a[0])
-            n_2 = int(a[1])
             lis = []
             for m in range(15):
                 if a[2 + m] == 0:
                     lis.append(0)
                 elif a[2 + m] == 4:
-                    lis.append(list_1[0])
-                    list_1.pop(0)
                     freshman_f_list[count[0]].seat = [i, m]
                     count[0] += 1
                 elif a[2 + m] == 5:
-                    lis.append(list_2[0])
-                    list_2.pop(0)
                     junior_f_list[count[1]].seat = [i, m]
                     count[1] += 1
                 elif a[2 + m] == 6:
-                    lis.append(list_3[0])
-                    list_3.pop(0)
                     senior_f_list[count[2]].seat = [i, m]
                     count[2] += 1
             seat_list.append(lis)
+        for tmp in freshman_f_list:
+            self.tmpPlan[4].append(tmp)
+        for tmp in junior_f_list:
+            self.tmpPlan[4].append(tmp)
+        for tmp in senior_f_list:
+            self.tmpPlan[4].append(tmp)
         x = sorted(freshman_f_list, key=lambda x: x.seat)
         y = sorted(junior_f_list, key=lambda x: x.seat)
         z = sorted(senior_f_list, key=lambda x: x.seat)
@@ -459,16 +431,32 @@ class WindowClass(QMainWindow, form_class):
             str_li += tmp
             self.lbl_sf.append(tmp)
 
-        if self.visualOn:
-            # 이미지를 만들고 출력(미구현)
-            self.lbl_sf.setPixmap(QPixmap("./pic/four.PNG").scaled(1000, 600))
         print("자습실(여) 배치")
 
     def exportXLSX(self):
         print("엑셀로 내보내기")
 
-    def exportPNG(self):
-        print("사진으로 내보내기")
+    def exportTXT(self):
+        f=open('배치.txt', 'w')
+        for i in range(5):
+            if not self.plan[i]:
+                if not self.tmpPlan[i]:
+                    f.write('<배치 정보 없음>\n')
+                    continue
+                else:
+                    for tmp in self.tmpPlan[i]:
+                        if i==0 or i==1 or i==2:
+                            f.write(tmp.name+' '+str(tmp.room)+'\n')
+                        else:
+                            f.write(tmp.name + ' ' + str(tmp.seat) + '\n')
+            else:
+                for tmp in self.plan[i]:
+                    if i == 0 or i == 1 or i == 2:
+                        f.write(tmp.name + ' ' + str(tmp.room) + '\n')
+                    else:
+                        f.write(tmp.name + ' ' + str(tmp.seat) + '\n')
+        f.close()
+        print("텍스트로 내보내기")
 
     def checkFunction(self, num):  # 2, 3, 4: 층 / 5: 자습실 남 / 6: 자습실 여
         if num == 2:
@@ -496,6 +484,16 @@ class WindowClass(QMainWindow, form_class):
                 self.save[6] = True
             else:
                 self.save[6] = False
+
+    def showMap(self, num):
+        if num==1:
+            self.pic.setPixmap(QPixmap('pic/floor2.png'))
+        elif num==2:
+            self.pic.setPixmap(QPixmap('pic/floor3.png'))
+        elif num==3:
+            self.pic.setPixmap(QPixmap('pic/floor4.png'))
+        else:
+            self.pic.setPixmap(QPixmap('pic/floor2.png')) # 알아서 나중에 바꾸기!
 
     def openFile(self):
         global freshman_num, junior_num, senior_num, student_xlsx
@@ -551,12 +549,19 @@ class WindowClass(QMainWindow, form_class):
         # 배치할 방 추출
         getRoom()
 
-    def changeMode(self):
-        self.visualOn = not self.visualOn
+
+def exception_hook(exctype, value, traceback):
+    print(exctype, value, traceback)
+    sys._excepthook(exctype, value, traceback)
+    sys.exit(1)
 
 
 if __name__ == "__main__":
+    sys._excepthook = sys.excepthook
+    sys.excepthook = exception_hook
+    os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
     app = QApplication(sys.argv)
+    app.setAttribute(Qt.AA_EnableHighDpiScaling)
     myWindow = WindowClass()
     myWindow.show()
     app.exec_()
