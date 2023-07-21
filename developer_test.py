@@ -10,7 +10,7 @@ import copy
 import webbrowser
 
 # UI 파일 연결
-form_class = uic.loadUiType("untitled.ui")[0]
+form_class = uic.loadUiType("design.ui")[0]
 
 # 사람, 방 리스트 생성
 freshman_list = []
