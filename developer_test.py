@@ -8,6 +8,8 @@ import pandas as pd
 import random as rd
 import copy
 import webbrowser
+import openpyxl
+from openpyxl.styles import Alignment
 
 # UI 파일 연결
 form_class = uic.loadUiType("design.ui")[0]
@@ -40,7 +42,7 @@ student_xlsx = 0
 # global senior_list, senior_m_list, senior_f_list, senior_f_room, senior_m_room, senior_num
 # global seat_list, list_to_fix_room, list_to_fix_seat
 
-# 방 리스트를 pop해서 배치하니까 복구를 해줘야 함(최적화 따위 포기)
+# 방 리스트를 pop해서 배치하니까 복구를 해줘야 함(나중에 최적화)
 def getRoom():
     global freshman_m_room, freshman_f_room, junior_m_room, junior_f_room, senior_m_room, senior_f_room
     freshman_m_room=[]
@@ -232,12 +234,18 @@ class WindowClass(QMainWindow, form_class):
         self.map_3.clicked.connect(lambda: self.showMap(3))
         self.map_4.clicked.connect(lambda: self.showMap(4))
 
+        self.saveMode = 0  # 0: 층별 / 1: 학년별
+        self.rBtn_floor.toggled.connect(lambda: self.changeMode(0))
+        self.rBtn_grade.toggled.connect(lambda: self.changeMode(1))
         self.actionExit.triggered.connect(qApp.quit)
         self.studentFileName = ''
         self.actionUpload.triggered.connect(self.openFile)
         self.plan = [[] for i in range(5)]
         self.tmpPlan = [[] for i in range(5)]
         self.actionHelp.triggered.connect(lambda: webbrowser.open('https://docs.google.com/document/d/1vIYdPUKljWS9jPG89pcUGDy9y6tLLtvv6ehw801yguo/edit?usp=sharing'))
+
+    def changeMode(self, n):
+        self.saveMode = n
 
     def roomPlan2(self, ifsave):
         global freshman_list, freshman_m_list, freshman_f_list, freshman_m_room, freshman_f_room, freshman_num
@@ -435,6 +443,34 @@ class WindowClass(QMainWindow, form_class):
         print("자습실(여) 배치")
 
     def exportXLSX(self):
+        wb = openpyxl.Workbook()
+        ws_room = [wb.create_sheet('방(2층)'), wb.create_sheet('방(3층)'), wb.create_sheet('방(4층)')]
+        ws_seat = wb.create_sheet('자습실')
+
+        # 가로: A, B, C, D ...
+        # 세로: 1, 2, 3, 4 ...
+        for i in range(3):
+            ws_room[i]['A1'] = '방'
+            ws_room[i]['B1'] = '이름'
+
+        for i in range(5):
+            if not self.plan[i]: # plan에 원소 X
+                tmpRoom = 0
+                for j, tmp in enumerate(self.tmpPlan[i]):
+                    if i == 0 or i == 1 or i == 2:
+                        ws_room[i]['A'+str(j+2)] = tmp.room
+                        ws_room[i]['B'+str(j+2)] = tmp.name
+                        if tmp.room == tmpRoom:
+                            ws_room[i].merge_cells('A'+str(j+1)+':A'+str(j+2))
+                        tmpRoom=tmp.room
+                    else:
+                        pass
+            else:
+                for tmp in self.plan[i]:
+                    pass
+
+        # 저장하기
+        wb.save('placement.xlsx')
         print("엑셀로 내보내기")
 
     def exportTXT(self):

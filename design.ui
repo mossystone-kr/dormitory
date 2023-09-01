@@ -262,14 +262,16 @@
        <layout class="QGridLayout" name="gridLayout_13">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_7">
-          <item row="1" column="2">
-           <widget class="QPushButton" name="btn_xlsx">
-            <property name="text">
-             <string>내보내기(.xlsx)</string>
+          <item row="0" column="0">
+           <widget class="QTextBrowser" name="lbl_c">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <spacer name="horizontalSpacer_6">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -282,19 +284,31 @@
             </property>
            </spacer>
           </item>
-          <item row="0" column="0">
-           <widget class="QTextBrowser" name="lbl_c">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="btn_xlsx">
+            <property name="text">
+             <string>내보내기(.xlsx)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="btn_txt">
+            <property name="text">
+             <string>내보내기(.txt)</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="btn_txt">
+           <widget class="QRadioButton" name="rBtn_floor">
             <property name="text">
-             <string>내보내기(.txt)</string>
+             <string>층별 저장</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QRadioButton" name="rBtn_grade">
+            <property name="text">
+             <string>학년별 저장</string>
             </property>
            </widget>
           </item>
