@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Dormitory</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>pic/dormitory.png</normaloff>pic/dormitory.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -28,7 +32,7 @@
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="1" column="2">
-           <widget class="QPushButton" name="btn_2f">
+           <widget class="QPushButton" name="btn_1g">
             <property name="text">
              <string>배치</string>
             </property>
@@ -48,7 +52,7 @@
            </spacer>
           </item>
           <item row="0" column="0">
-           <widget class="QTextBrowser" name="lbl_2f">
+           <widget class="QTextBrowser" name="lbl_1g">
             <property name="font">
              <font>
               <pointsize>12</pointsize>
@@ -57,7 +61,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QCheckBox" name="check_2f">
+           <widget class="QCheckBox" name="check_1g">
             <property name="text">
              <string>현재 배치 저장</string>
             </property>
@@ -75,7 +79,7 @@
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="1" column="2">
-           <widget class="QPushButton" name="btn_3f">
+           <widget class="QPushButton" name="btn_2g">
             <property name="text">
              <string>배치</string>
             </property>
@@ -95,7 +99,7 @@
            </spacer>
           </item>
           <item row="0" column="0">
-           <widget class="QTextBrowser" name="lbl_3f">
+           <widget class="QTextBrowser" name="lbl_2g">
             <property name="font">
              <font>
               <pointsize>12</pointsize>
@@ -104,7 +108,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QCheckBox" name="check_3f">
+           <widget class="QCheckBox" name="check_2g">
             <property name="text">
              <string>현재 배치 저장</string>
             </property>
@@ -122,7 +126,7 @@
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
-           <widget class="QTextBrowser" name="lbl_4f">
+           <widget class="QTextBrowser" name="lbl_3g">
             <property name="font">
              <font>
               <pointsize>12</pointsize>
@@ -144,14 +148,14 @@
            </spacer>
           </item>
           <item row="1" column="2">
-           <widget class="QPushButton" name="btn_4f">
+           <widget class="QPushButton" name="btn_3g">
             <property name="text">
              <string>배치</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QCheckBox" name="check_4f">
+           <widget class="QCheckBox" name="check_3g">
             <property name="text">
              <string>현재 배치 저장</string>
             </property>
@@ -398,7 +402,7 @@
      <x>0</x>
      <y>0</y>
      <width>1405</width>
-     <height>22</height>
+     <height>36</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

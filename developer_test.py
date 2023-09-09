@@ -10,6 +10,8 @@ import copy
 import webbrowser
 import openpyxl
 from openpyxl.styles import Alignment
+from openpyxl.styles import Border, Side
+from openpyxl.styles import PatternFill
 
 # UI 파일 연결
 form_class = uic.loadUiType("design.ui")[0]
@@ -206,6 +208,7 @@ class Student:
         self.name = "g"
         self.sex = 0
         self.room = 0
+        self.grade = 0
         self.seat = [0, 0]
 
 # 화면을 띄우는데 사용되는 Class 선언
@@ -215,17 +218,15 @@ class WindowClass(QMainWindow, form_class):
         self.setupUi(self)
 
         self.save = [False] * 7
-        self.btn_2f.clicked.connect(lambda: self.roomPlan2(self.save[2]))
-        self.btn_3f.clicked.connect(lambda: self.roomPlan3(self.save[3]))
-        self.btn_4f.clicked.connect(lambda: self.roomPlan4(self.save[4]))
+        self.btn_1g.clicked.connect(lambda: self.roomPlan1(self.save[2]))
+        self.btn_2g.clicked.connect(lambda: self.roomPlan2(self.save[3]))
+        self.btn_3g.clicked.connect(lambda: self.roomPlan3(self.save[4]))
         self.btn_sm.clicked.connect(lambda: self.studyPlanM(self.save[5]))
         self.btn_sf.clicked.connect(lambda: self.studyPlanF(self.save[6]))
-        self.btn_xlsx.clicked.connect(self.exportXLSX)
-        self.btn_txt.clicked.connect(self.exportTXT)
 
-        self.check_2f.stateChanged.connect(lambda: self.checkFunction(2))
-        self.check_3f.stateChanged.connect(lambda: self.checkFunction(3))
-        self.check_4f.stateChanged.connect(lambda: self.checkFunction(4))
+        self.check_1g.stateChanged.connect(lambda: self.checkFunction(2))
+        self.check_2g.stateChanged.connect(lambda: self.checkFunction(3))
+        self.check_3g.stateChanged.connect(lambda: self.checkFunction(4))
         self.check_sm.stateChanged.connect(lambda: self.checkFunction(5))
         self.check_sf.stateChanged.connect(lambda: self.checkFunction(6))
 
@@ -237,6 +238,8 @@ class WindowClass(QMainWindow, form_class):
         self.saveMode = 0  # 0: 층별 / 1: 학년별
         self.rBtn_floor.toggled.connect(lambda: self.changeMode(0))
         self.rBtn_grade.toggled.connect(lambda: self.changeMode(1))
+        self.btn_xlsx.clicked.connect(lambda: self.exportXLSX(self.saveMode))
+        self.btn_txt.clicked.connect(lambda: self.exportTXT(self.saveMode))
         self.actionExit.triggered.connect(qApp.quit)
         self.studentFileName = ''
         self.actionUpload.triggered.connect(self.openFile)
@@ -247,11 +250,15 @@ class WindowClass(QMainWindow, form_class):
     def changeMode(self, n):
         self.saveMode = n
 
-    def roomPlan2(self, ifsave):
+    def roomPlan1(self, ifsave):
         global freshman_list, freshman_m_list, freshman_f_list, freshman_m_room, freshman_f_room, freshman_num
         global seat_list, list_to_fix_room, list_to_fix_seat
         if self.studentFileName == '':
-            QMessageBox.about(self, 'Warning', 'No File Selected')
+            msg=QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText('No File Selected')
+            msg.setWindowTitle('Warning')
+            msg.exec_()
             return
         if ifsave:
             self.plan[0] = copy.deepcopy(self.tmpPlan[0])
@@ -272,14 +279,13 @@ class WindowClass(QMainWindow, form_class):
         for tmp in x:
             self.tmpPlan[0].append(tmp)
         str_x=''
-        self.lbl_2f.clear()
+        self.lbl_1g.clear()
         for tmpStudent in x:
             tmp=(tmpStudent.name+' '+str(tmpStudent.room)+'\n')
             str_x+=tmp
-            self.lbl_2f.append(tmp)
-        print("2층 배치")
+            self.lbl_1g.append(tmp)
 
-    def roomPlan3(self, ifsave):
+    def roomPlan2(self, ifsave):
         global junior_list, junior_m_list, junior_f_list, junior_m_room, junior_f_room, junior_num
         global seat_list, list_to_fix_room, list_to_fix_seat
         if self.studentFileName == '':
@@ -304,14 +310,13 @@ class WindowClass(QMainWindow, form_class):
         for tmp in x:
             self.tmpPlan[1].append(tmp)
         str_x = ''
-        self.lbl_3f.setText('')
+        self.lbl_2g.setText('')
         for tmpStudent in x:
             tmp = (tmpStudent.name + ' ' + str(tmpStudent.room) + '\n')
             str_x += tmp
-            self.lbl_3f.append(tmp)
-        print("3층 배치")
+            self.lbl_2g.append(tmp)
 
-    def roomPlan4(self, ifsave):
+    def roomPlan3(self, ifsave):
         global senior_list, senior_m_list, senior_f_list, senior_f_room, senior_m_room, senior_num
         global seat_list, list_to_fix_room, list_to_fix_seat
         if self.studentFileName == '':
@@ -336,12 +341,11 @@ class WindowClass(QMainWindow, form_class):
         for tmp in x:
             self.tmpPlan[2].append(tmp)
         str_x = ''
-        self.lbl_4f.setText('')
+        self.lbl_3g.setText('')
         for tmpStudent in x:
             tmp = (tmpStudent.name + ' ' + str(tmpStudent.room) + '\n')
             str_x += tmp
-            self.lbl_4f.append(tmp)
-        print("4층 배치")
+            self.lbl_3g.append(tmp)
 
     def studyPlanM(self, ifsave):
         global freshman_m_list, junior_m_list, senior_m_list
@@ -389,8 +393,6 @@ class WindowClass(QMainWindow, form_class):
             tmp = (tmpStudent.name + ' ' + str(tmpStudent.seat) + '\n')
             str_li += tmp
             self.lbl_sm.append(tmp)
-
-        print("자습실(남) 배치")
 
     def studyPlanF(self, ifsave):
         global freshman_f_list, junior_f_list, senior_f_list
@@ -440,57 +442,133 @@ class WindowClass(QMainWindow, form_class):
             str_li += tmp
             self.lbl_sf.append(tmp)
 
-        print("자습실(여) 배치")
 
-    def exportXLSX(self):
+    def exportXLSX(self, saveMode):
         wb = openpyxl.Workbook()
-        ws_room = [wb.create_sheet('방(2층)'), wb.create_sheet('방(3층)'), wb.create_sheet('방(4층)')]
-        ws_seat = wb.create_sheet('자습실')
-
+        alpha_list = [chr(i) for i in range(65, 80)]
+        grade_color = [0, 'FFFF5A', '77FF70', '6799FF']
+        tSide = Side(border_style='thin')
         # 가로: A, B, C, D ...
         # 세로: 1, 2, 3, 4 ...
+        ws_seat = wb.create_sheet('자습실')
+        del wb['Sheet']
+        ws_room = [wb.create_sheet('1학년'), wb.create_sheet('2학년'), wb.create_sheet('3학년')]
+
         for i in range(3):
             ws_room[i]['A1'] = '방'
             ws_room[i]['B1'] = '이름'
+            ws_room[i]['A1'].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+            ws_room[i]['B1'].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
 
+            ws_seat[alpha_list[i] + '18'] = str(i + 1) + '학년'
+            ws_seat[alpha_list[i] + '18'].fill = PatternFill(start_color=grade_color[i + 1], fill_type='solid')
+
+        saveplan=[0]*5
         for i in range(5):
             if not self.plan[i]: # plan에 원소 X
-                tmpRoom = 0
-                for j, tmp in enumerate(self.tmpPlan[i]):
-                    if i == 0 or i == 1 or i == 2:
-                        ws_room[i]['A'+str(j+2)] = tmp.room
-                        ws_room[i]['B'+str(j+2)] = tmp.name
-                        if tmp.room == tmpRoom:
-                            ws_room[i].merge_cells('A'+str(j+1)+':A'+str(j+2))
-                        tmpRoom=tmp.room
-                    else:
-                        pass
+                saveplan[i]=copy.deepcopy(self.tmpPlan[i])
             else:
-                for tmp in self.plan[i]:
-                    pass
+                saveplan[i]=copy.deepcopy(self.plan[i])
 
+        for i in range(3,5):
+            for j, tmp in enumerate(saveplan[i]):
+                coord = tmp.seat
+                xlcoord = alpha_list[coord[0]] + str(coord[1] + 1)
+                ws_seat[xlcoord] = tmp.name
+                ws_seat[xlcoord].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+                ws_seat[xlcoord].fill = PatternFill(start_color=grade_color[tmp.grade], fill_type='solid')
+
+        if saveMode==1:
+            tmpRoom = 0
+            for i in range(3):
+                for j, tmp in enumerate(saveplan[i]):
+                    ws_room[i]['A' + str(j + 2)] = tmp.room
+                    ws_room[i]['B' + str(j + 2)] = tmp.name
+                    if tmp.room == tmpRoom:
+                        ws_room[i].merge_cells('A' + str(j + 1) + ':A' + str(j + 2))
+                    tmpRoom = tmp.room
+                    ws_room[i]['A' + str(j + 2)].alignment = Alignment(horizontal='right', vertical='center')
+                    ws_room[i]['B' + str(j + 2)].alignment = Alignment(horizontal='left')
+                    ws_room[i]['A' + str(j + 2)].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+                    ws_room[i]['B' + str(j + 2)].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+        else:
+            ws_room[0].title = '2층'
+            ws_room[1].title = '3층'
+            ws_room[2].title = '4층'
+            tmpRoom=0
+            tmpIndex=[1,2,3]
+            for i in range(3):
+                for j, tmp in enumerate(saveplan[i]):
+                    if tmp.room >= 400:
+                        tmpIndex[i]=j
+                        break
+                    k=i
+                    if i==2:
+                        k=1
+                        j+=tmpIndex[1]
+                    ws_room[k]['A' + str(j + 2)] = tmp.room
+                    ws_room[k]['B' + str(j + 2)] = tmp.name
+                    if tmp.room == tmpRoom:
+                        ws_room[k].merge_cells('A' + str(j + 1) + ':A' + str(j + 2))
+                    tmpRoom = tmp.room
+                    ws_room[k]['A' + str(j + 2)].alignment = Alignment(horizontal='right', vertical='center')
+                    ws_room[k]['B' + str(j + 2)].alignment = Alignment(horizontal='left')
+                    ws_room[k]['A' + str(j + 2)].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+                    ws_room[k]['B' + str(j + 2)].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+            savepoint=0
+            for i in range(3):
+                for j in range(tmpIndex[i], len(saveplan[i])):
+                    tmp = saveplan[i][j]
+                    ind = str(j+2-tmpIndex[i]+savepoint)
+                    ws_room[2]['A' + ind] = tmp.room
+                    ws_room[2]['B' + ind] = tmp.name
+                    if tmp.room == tmpRoom:
+                        ws_room[2].merge_cells('A' + str(int(ind)-1) + ':A' + ind)
+                    tmpRoom = tmp.room
+                    ws_room[2]['A' + ind].alignment = Alignment(horizontal='right', vertical='center')
+                    ws_room[2]['B' + ind].alignment = Alignment(horizontal='left')
+                    ws_room[2]['A' + ind].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+                    ws_room[2]['B' + ind].border = Border(top=tSide, right=tSide, bottom=tSide, left=tSide)
+                savepoint+=len(saveplan[i])-tmpIndex[i]
         # 저장하기
         wb.save('placement.xlsx')
-        print("엑셀로 내보내기")
 
-    def exportTXT(self):
+    def exportTXT(self, saveMode):
         f=open('배치.txt', 'w')
+        saveplan=[0]*5
         for i in range(5):
             if not self.plan[i]:
-                for tmp in self.tmpPlan[i]:
-                    if i == 0 or i == 1 or i == 2:
-                        f.write(tmp.name + ' ' + str(tmp.room) + '\n')
-                    else:
-                        f.write(tmp.name + ' ' + str(tmp.seat) + '\n')
+                saveplan[i]=copy.deepcopy(self.tmpPlan[i])
             else:
-                print(1)
-                for tmp in self.plan[i]:
-                    if i == 0 or i == 1 or i == 2:
+                saveplan[i]=copy.deepcopy(self.plan[i])
+
+        if saveMode == 1:
+            for i in range(5):
+                for tmp in saveplan[i]:
+                    if i <= 2:
                         f.write(tmp.name + ' ' + str(tmp.room) + '\n')
                     else:
                         f.write(tmp.name + ' ' + str(tmp.seat) + '\n')
+                f.write('\n')
+        else:
+            tmpIndex=[0]*5
+            for i in range(3):
+                for j, tmp in enumerate(saveplan[i]):
+                    if tmp.room >= 400:
+                        tmpIndex[i]=j
+                        break
+                    f.write(tmp.name + ' ' + str(tmp.room) + '\n')
+                f.write('\n')
+            for i in range(3):
+                for j in range(tmpIndex[i], len(saveplan[i])):
+                    tmp=saveplan[i][j]
+                    f.write(tmp.name + ' ' + str(tmp.room) + '\n')
+            f.write('\n')
+            for i in range(3,5):
+                for tmp in saveplan[i]:
+                    f.write(tmp.name + ' ' + str(tmp.seat) + '\n')
+                f.write('\n')
         f.close()
-        print("텍스트로 내보내기")
 
     def checkFunction(self, num):  # 2, 3, 4: 층 / 5: 자습실 남 / 6: 자습실 여
         if num == 2:
@@ -547,6 +625,7 @@ class WindowClass(QMainWindow, form_class):
             a = Student()
             a.num = int(student_xlsx["학번1"][i])
             a.name = student_xlsx["이름1"][i]
+            a.grade = 1
             if student_xlsx["성별1"][i] == "남":
                 a.sex = 0
                 freshman_m_list.append(a)
@@ -557,6 +636,7 @@ class WindowClass(QMainWindow, form_class):
             a = Student()
             a.num = int(student_xlsx["학번2"][i])
             a.name = student_xlsx["이름2"][i]
+            a.grade = 2
             if student_xlsx["성별2"][i] == "남":
                 a.sex = 0
                 junior_m_list.append(a)
@@ -568,6 +648,7 @@ class WindowClass(QMainWindow, form_class):
             a = Student()
             a.num = int(student_xlsx["학번3"][i])
             a.name = student_xlsx["이름3"][i]
+            a.grade = 3
             if student_xlsx["성별3"][i] == "남":
                 a.sex = 0
                 senior_m_list.append(a)
