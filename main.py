@@ -1,5 +1,6 @@
 import sys
 import os
+import PyQt5
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -13,8 +14,12 @@ from openpyxl.styles import Alignment
 from openpyxl.styles import Border, Side
 from openpyxl.styles import PatternFill
 
-# UI 파일 연결
-form_class = uic.loadUiType("design.ui")[0]
+def resource_path(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+form_class = uic.loadUiType(BASE_DIR + r'\design.ui')[0]
 
 # 사람, 방 리스트 생성
 freshman_list = []
@@ -233,7 +238,6 @@ class WindowClass(QMainWindow, form_class):
         self.map_1.clicked.connect(lambda: self.showMap(1))
         self.map_2.clicked.connect(lambda: self.showMap(2))
         self.map_3.clicked.connect(lambda: self.showMap(3))
-        self.map_4.clicked.connect(lambda: self.showMap(4))
 
         self.saveMode = 0  # 0: 층별 / 1: 학년별
         self.rBtn_floor.toggled.connect(lambda: self.changeMode(0))
@@ -255,7 +259,6 @@ class WindowClass(QMainWindow, form_class):
         global seat_list, list_to_fix_room, list_to_fix_seat
         if self.studentFileName == '':
             msg=QMessageBox()
-            msg.setIcon(QMessageBox.Warning)
             msg.setText('No File Selected')
             msg.setWindowTitle('Warning')
             msg.exec_()
@@ -604,8 +607,6 @@ class WindowClass(QMainWindow, form_class):
             self.pic.setPixmap(QPixmap('pic/floor3.png'))
         elif num==3:
             self.pic.setPixmap(QPixmap('pic/floor4.png'))
-        else:
-            self.pic.setPixmap(QPixmap('pic/floor2.png')) # 알아서 나중에 바꾸기!
 
     def openFile(self):
         global freshman_num, junior_num, senior_num, student_xlsx
